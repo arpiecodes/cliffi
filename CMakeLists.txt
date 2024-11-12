@@ -6,6 +6,8 @@ enable_testing()
 # Set C standard
 set(CMAKE_C_STANDARD 99)
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+link_libraries("-static")
+
 
 set(USE_REPL_MODE ON)
 
@@ -94,11 +96,7 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(LIBFFI libffi REQUIRED)
 pkg_search_module(READLINE readline REQUIRED)
 
-
-target_link_libraries(cliffi PRIVATE
-${LIBFFI_LIBRARIES}
-${READLINE_LIBRARIES}
-)
+target_link_libraries(cliffi PUBLIC "-static")
 
 endif()
 # Append the project root directory to CMAKE_PREFIX_PATH
