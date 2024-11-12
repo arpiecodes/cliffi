@@ -5,7 +5,7 @@ enable_testing()
 
 # Set C standard
 set(CMAKE_C_STANDARD 99)
-
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
 set(USE_REPL_MODE ON)
 
