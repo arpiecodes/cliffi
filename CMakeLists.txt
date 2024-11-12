@@ -1,13 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(cliffi VERSION 1.0 LANGUAGES C)
 
-enable_testing()
-
 # Set C standard
 set(CMAKE_C_STANDARD 99)
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 link_libraries("-static")
-
 
 set(USE_REPL_MODE ON)
 
@@ -36,6 +33,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
 
 #if in debug mode enable coverage
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -96,7 +94,10 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(LIBFFI libffi REQUIRED)
 pkg_search_module(READLINE readline REQUIRED)
 
-target_link_libraries(cliffi PUBLIC "-static")
+target_link_libraries(cliffi PRIVATE
+${LIBFFI_LIBRARIES}
+${READLINE_LIBRARIES}
+)
 
 endif()
 # Append the project root directory to CMAKE_PREFIX_PATH
