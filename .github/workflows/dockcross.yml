@@ -42,7 +42,7 @@ jobs:
       fail-fast: false
       matrix:
         dockcross_image:
-          - linux-armv7hf
+          - linux-armv7
 
     steps:
       - uses: actions/checkout@v3
